@@ -1,0 +1,2 @@
+[some]
+Interval = 300
