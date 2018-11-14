@@ -3,7 +3,7 @@ import datetime
 import psutil
 import time
 parser = ConfigParser()
-parser.read('config.py')
+parser.read('config.txt')
 Interval = (parser.get('some', 'Interval'))
 Cheker = 1
 
