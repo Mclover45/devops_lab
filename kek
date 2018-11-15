@@ -1,0 +1,63 @@
+import psutil
+import datetime
+import json
+from time import sleep
+from configparser import ConfigParser
+from prettytable import PrettyTable
+ def cat():
+    print(str("(=^･ｪ･^=)"))
+    return print
+ def pretty():
+    myt = PrettyTable()
+    myt.field_names = [
+        "CPU,%", "Memory(rss)", "Used VMemory",
+        "IO (write)", "Network(sent)"
+        ]
+    myt.add_row([cpu, memory, vmemory, io, network])
+    return myt.get_string()
+ def write_text(z):
+    out_file = open("output.txt", "a")
+    out_file.write("SNAPSHOT " + str(count) + " : " + '\n')
+    out_file.write("Date: " + date + '\t' + time + '\n')
+    out_file.write(z + '\n')
+    out_file.write('\n' + '\n')
+    out_file.close()
+ def write_json(y):
+    out_file = open("output_json", "a")
+    out_file.write("SNAPSHOT " + str(count) + " : " + '\n')
+    out_file.write("Date: " + date + '\t' + time + '\n')
+    out_file.write(json.dumps(y + '\n'))
+    out_file.write('\n' + '\n')
+    out_file.close()
+ cat()
+count = 1
+ parser = ConfigParser()
+parser.read('input.txt')
+interval = int(parser.get('common', 'interval'))
+output = (parser.get('common', 'output'))
+ print("Interval = ", interval)
+print("Output type = ", output)
+ if output == "text":
+    while True:
+        cpu = str(psutil.cpu_percent())
+        memory = str(psutil.Process().memory_info().rss/(1024*1024))
+        vmemory = str(psutil.virtual_memory().used/(1024*1024))
+        io = str(psutil.disk_io_counters().write_bytes/(1024*1024))
+        network = str(psutil.net_io_counters().bytes_sent/(1024*1024))
+        time = str(datetime.datetime.now().time())
+        date = str(datetime.datetime.now().date())
+        write_text(pretty())
+        count += 1
+        sleep(interval)
+ if output == "json":
+    while True:
+        cpu = str(psutil.cpu_percent())
+        memory = str(psutil.Process().memory_info().rss/(1024*1024))
+        vmemory = str(psutil.virtual_memory().used/(1024*1024))
+        io = str(psutil.disk_io_counters().write_bytes/(1024*1024))
+        network = str(psutil.net_io_counters().bytes_sent/(1024*1024))
+        time = str(datetime.datetime.now().time())
+        date = str(datetime.datetime.now().date())
+        write_json(pretty())
+        count += 1
+        sleep(interval)

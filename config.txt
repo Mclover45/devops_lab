@@ -1,2 +1,2 @@
 [some]
-Interval = 300
+Interval = 1
