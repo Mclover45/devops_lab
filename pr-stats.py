@@ -17,4 +17,4 @@ elif str(ans) == "['pr-stats.py', '--c']":
 elif str(ans) == "['pr-stats.py', '--s']":
     print('Status:', req['labels'][0]['name'])
 elif str(ans) == "['pr-stats.py', '--help']":
-    print("Who created --u , When created --a, When closed --c, Status --s")
+    print("Who created --u , When created --u, When closed --c, Status --s")
